@@ -10,8 +10,6 @@ export const getAllContacts = async ({
   userId,
 }) => {
   const limit = perPage;
-  console.log(page, perPage);
-
   const skip = page > 0 ? (page - 1) * perPage : 0;
   const contactsQuery = ContactsCollection.find({ userId });
 
