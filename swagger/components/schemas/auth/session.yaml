@@ -1,0 +1,53 @@
+type: object
+title: Session
+description: Represents a user session created during login.
+required:
+  - _id
+  - userId
+  - accessToken
+  - refreshToken
+  - accessTokenValidUntil
+  - refreshTokenValidUntil
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: Session ID
+    example: 68f4e2cd5bd18b92feb71a6c
+  userId:
+    type: string
+    description: User ID
+    example: 68e136579080ee18ea7299a4
+  accessToken:
+    type: string
+    description: Session access token
+    example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
+  refreshToken:
+    type: string
+    description: Session refresh token
+    example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
+  accessTokenValidUntil:
+    type: string
+    format: date-time
+    description: >
+      Expiration time of the access token.
+      Access token is valid for **2 hours** from creation.
+    example: 2025-10-19T15:38:29.669+00:00
+  refreshTokenValidUntil:
+    type: string
+    format: date-time
+    description: >
+      Expiration time of the refresh token.
+      Refresh token is valid for **30 days** from creation.
+    example: 2025-11-18T13:08:29.669+00:00
+  createdAt:
+    type: string
+    format: date-time
+    description: Date of session creation
+    example: 2025-10-19T13:08:29.670+00:00
+  updatedAt:
+    type: string
+    format: date-time
+    description: Date of session last update
+    example: 2025-10-19T13:08:29.670+00:00

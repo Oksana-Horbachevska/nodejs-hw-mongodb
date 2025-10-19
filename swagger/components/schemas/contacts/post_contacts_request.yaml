@@ -1,0 +1,29 @@
+type: object
+required:
+  - name
+  - phoneNumber
+  - contactType
+properties:
+  name:
+    type: string
+    description: Contact name
+    minLength: 3
+    maxLength: 50
+    example: Ivan Pavelko
+  phoneNumber:
+    type: string
+    description: Contact phone number
+    example: +380200000001
+  contactType:
+    type: string
+    description: Contact type
+    enum: ['work', 'home', 'personal']
+    example: home
+  email:
+    type: string
+    description: Contact email
+    example: ivan@gmail.com
+  photo:
+    type: string
+    description: Contact photo
+    example: http://localhost:8080/photos/1760298573710-175228118_IMG_0473.jpg

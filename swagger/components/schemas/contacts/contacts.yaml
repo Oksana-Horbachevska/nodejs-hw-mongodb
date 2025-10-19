@@ -1,0 +1,57 @@
+type: object
+required:
+  - _id
+  - name
+  - phoneNumber
+  - email
+  - isFavourite
+  - contactType
+  - photo
+  - userId
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: Contact id
+    example: 68ec15f83c216be234e84065
+  name:
+    type: string
+    description: Contact name
+    example: Olga Koval
+  phoneNumber:
+    type: string
+    description: Phone number of the contact
+    example: +380200000009
+  email:
+    type: string
+    description: Email of the contact
+    example: olgas@mail.com
+  isFavourite:
+    type: boolean
+    description: Is contact a favorite
+    default: false
+    example: true
+  contactType:
+    type: string
+    description: Type of the contact
+    enum: ['work', 'home', 'personal']
+    default: personal
+    example: home
+  photo:
+    type: string
+    description: Photo of the contact
+    default: null
+    example: https://res.cloudinary.com/dyy6iuikt/image/upload/v1760302583/lwjtcjei2yw73vra2pbp.jpg
+  userId:
+    type: string
+    description: User owner id
+    example: 68e136579080ee18ea7299a4
+  createdAt:
+    type: string
+    format: date-time
+    example: 2025-10-12T20:56:24.006Z
+  updatedAt:
+    type: string
+    format: date-time
+    example: 2025-10-12T21:37:03.042Z

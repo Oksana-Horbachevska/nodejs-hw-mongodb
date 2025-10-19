@@ -1,0 +1,54 @@
+tags:
+  - Auth
+summary: Send reset email
+operationId: sendResetEmail
+description: >
+  Sends an email with a password reset link that contains a JWT token.
+  The link allows the user to reset their password.
+  Example link structure:
+  `https://your-frontend-domain.com/auth/reset-password?token=<JWT_TOKEN>`
+
+  The JWT token is valid for a limited time 5 min and encodes
+  the user's ID and expiration timestamp.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            type: string
+            description: User email to which the reset link will be sent
+            example: denis2@gmail.com
+
+responses:
+  '200':
+    description: Reset password email has been successfully sent.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Reset password email has been successfully sent.
+            data:
+              type: object
+              description: Empty object (no response body content)
+
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

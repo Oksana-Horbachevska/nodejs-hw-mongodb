@@ -1,0 +1,25 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: Ends user session
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - _id
+        properties:
+          _id:
+            type: string
+            description: Session ID
+            example: 68f4b3f2798f29a7c445f0d0
+responses:
+  '204':
+    description: No content
+  '500':
+    $ref: ../../components/responses/500.yaml
