@@ -1,0 +1,70 @@
+tags:
+  - Auth
+summary: Refresh user session
+operationId: refreshUserSession
+description: Refresh user session creating new pear of access and refresh tokens  .
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - _id
+          - refreshToken
+        properties:
+          _id:
+            type: string
+            description: Session ID
+            example: 68f4e2cd5bd18b92feb71a6c
+          refreshToken:
+            type: string
+            description: Refresh token of session
+            example: +v6IL9HPf7EwJzFHqxFB8WoKLfmQShzTG97XqNIk
+responses:
+  '201':
+    description: Successfully refreshed a session!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully refreshed a session!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  description: Session access token
+                  example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
+  '401':
+    description: Session not found | Session token ispired
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Session not found | Session token ispired
+  '500':
+    $ref: ../../components/responses/500.yaml

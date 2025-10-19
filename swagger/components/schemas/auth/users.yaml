@@ -1,0 +1,28 @@
+type: object
+required:
+  - name
+  - email
+  - _id
+  - createdAt
+  - updatedAt
+properties:
+  name:
+    type: string
+    description: User name
+    example: Denis Fox
+  email:
+    type: string
+    description: User email
+    example: denis@gmail.com
+  _id:
+    type: string
+    description: User id
+    example: 68f4a1fdd5968b7d7e5b54fc
+  createdAt:
+    type: string
+    format: date-time
+    example: 2025-10-19T08:31:57.767Z
+  updatedAt:
+    type: string
+    format: date-time
+    example: 2025-10-19T08:31:57.767Z

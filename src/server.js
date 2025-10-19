@@ -7,6 +7,7 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { createSwaggerDocs } from './middlewares/createSwaggerDocs.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -17,6 +18,7 @@ export function setupServer() {
   app.use(cors());
   app.use(cookieParser());
   app.use('/photos', express.static(path.resolve('src', 'uploads', 'photos')));
+  app.use('/api-docs', createSwaggerDocs());
 
   app.use(
     pino({

@@ -1,0 +1,39 @@
+tags:
+  - Contacts
+summary: Create contact
+operationId: createContact
+description: Create a new contact
+security:
+  - bearerAuth: []
+
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        $ref: ../../components/schemas/contacts/post_contacts_request.yaml
+responses:
+  '201':
+    description: Successfully created a contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              $ref: ../../components/schemas/contacts/contacts.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

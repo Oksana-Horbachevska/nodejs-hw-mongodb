@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: The amazing contacts API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: >
+    This is a documentation of Amazing contacts API
+tags:
+  - name: Contacts
+    description: Contacts endpoints
+  - name: Auth
+    description: Auth endpoints
+servers:
+  - url: http://127.0.0.1:8080
+    #посилання на задеплоєний сайт
+paths:
+  /contacts/{id}:
+    get:
+      $ref: ../swagger/paths/contacts/{id}/get.yaml
+    delete:
+      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{id}/patch.yaml
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+  /auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send_reset_email.yaml
+  /auth/reset-pwd:
+    post:
+      $ref: ../swagger/paths/auth/reset_pwd.yaml
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    session:
+      $ref: ../swagger/components/schemas/auth/session.yaml
