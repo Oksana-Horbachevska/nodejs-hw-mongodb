@@ -1,10 +1,13 @@
 tags:
   - Auth
-summary: Login user
+summary: Log in user
 operationId: loginUser
-description: Logs in a registered user and creates a session.
-security:
-  - bearerAuth: []
+description: >
+  Authenticates a registered user using their email and password.
+  On successful login, a new session is created and an **access token** is issued.
+  This token must be included in the `Authorization` header for all protected routes.
+  The access token is valid for **30 minutes**.
+security: []
 requestBody:
   required: true
   content:
@@ -49,7 +52,9 @@ responses:
               properties:
                 accessToken:
                   type: string
-                  description: Session access token
+                  description: >
+                    The access token for authenticating subsequent requests.
+                    **Expires in 30 minutes.**
                   example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
   '400':
     $ref: ../../components/responses/400.yaml

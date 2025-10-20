@@ -44,8 +44,8 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + 120 * 60 * 1000),
-    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    accessTokenValidUntil: new Date(Date.now() + 30 * 60 * 1000), // 30 minutes
+    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
   });
 };
 
@@ -59,8 +59,8 @@ const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + 15 * 60 * 1000),
-    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    accessTokenValidUntil: new Date(Date.now() + 30 * 60 * 1000), // 30 minutes
+    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
   };
 };
 
@@ -129,3 +129,26 @@ export const resetPassword = async (token, password) => {
     throw error;
   }
 };
+
+export async function loginOrRegister(email, name) {
+  let user = await User.findOne({ email });
+
+  if (user === null) {
+    const password = await bcrypt.hash(
+      crypto.randomBytes(30).toString('base64'),
+      10,
+    );
+
+    user = await User.create({ name, email, password });
+  }
+
+  await Session.deleteOne({ userId: user._id });
+
+  return Session.create({
+    userId: user._id,
+    accessToken: crypto.randomBytes(30).toString('base64'),
+    refreshToken: crypto.randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + 30 * 60 * 1000), // 30 minutes
+    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+  });
+}

@@ -1,0 +1,58 @@
+tags:
+  - Auth
+summary: Confirm OAuth authorization
+operationId: confirmOauth
+description: >
+  Completes the OAuth authorization process by exchanging the authorization `code`
+  (received from Google) for an access token.
+  The returned **access token** can be used to authenticate subsequent API requests.
+  The token is valid for **30 minutes**.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            type: string
+            description: >
+              The authorization code received from Google after successful user consent.
+            example: 4/0AVGzR1CWhf2wt9w0ry_66Ovoc1i41GwMF6INt6_XoqHXeGFXNOCP21AT4SvnHJ2...
+responses:
+  '200':
+    description: Successfully authenticated the user via Google OAuth.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully authenticated the user via Google OAuth.
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  description: >
+                    Empty object (no response body content)The access token for authenticating subsequent requests.
+                    **Expires in 30 minutes.**
+                  example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

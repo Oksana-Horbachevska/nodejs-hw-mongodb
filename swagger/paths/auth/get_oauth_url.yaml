@@ -1,0 +1,44 @@
+tags:
+  - Auth
+summary: Get Google OAuth URL
+operationId: getOauthUrl
+description: >
+  Returns the Google OAuth authorization URL that the frontend should redirect the user to.
+  The user will authenticate with Google and then be redirected back to your app's
+  callback endpoint (e.g., `/auth/confirm-oauth`) with an authorization code.
+
+security: []
+responses:
+  '200':
+    description: Successfully get OAuth url.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully get OAuth url.
+            data:
+              type: object
+              required:
+                - oauth_url
+              properties:
+                oauth_url:
+                  type: string
+                  description: The full URL to redirect the user for Google OAuth authentication.
+                  example: >
+                    https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email
+                    %20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile
+                    &response_type=code
+                    &client_id=791482148899-h3h81633fvde8pr3enhpvl69t2ekkt58.apps.googleusercontent.com
+                    &redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgoogle-redirect
+  '500':
+    $ref: ../../components/responses/500.yaml
