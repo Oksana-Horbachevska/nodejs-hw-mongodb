@@ -578,14 +578,10 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Login user",
+        "summary": "Log in user",
         "operationId": "loginUser",
-        "description": "Logs in a registered user and creates a session.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "description": "Authenticates a registered user using their email and password. On successful login, a new session is created and an **access token** is issued. This token must be included in the `Authorization` header for all protected routes. The access token is valid for **30 minutes**.\n",
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -642,7 +638,7 @@
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "description": "Session access token",
+                          "description": "The access token for authenticating subsequent requests. **Expires in 30 minutes.**\n",
                           "example": "5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9"
                         }
                       }
@@ -714,7 +710,7 @@
         ],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
-        "description": "Refresh user session creating new pear of access and refresh tokens  .",
+        "description": "Refreshes the user session by generating a new pair of **access** and **refresh tokens**. Requires a valid `refreshToken` from an active session. - **Access token** is valid for 30 minutes. - **Refresh token** is valid for 30 days.\n",
         "security": [
           {
             "bearerAuth": []
@@ -738,7 +734,7 @@
                   },
                   "refreshToken": {
                     "type": "string",
-                    "description": "Refresh token of session",
+                    "description": "The refresh token issued during login. Used to request a new access token when the old one expires.\n",
                     "example": "+v6IL9HPf7EwJzFHqxFB8WoKLfmQShzTG97XqNIk"
                   }
                 }
@@ -775,7 +771,7 @@
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "description": "Session access token",
+                          "description": "The new access token. Valid for **30 minutes** from the time of issuance.\n",
                           "example": "5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9"
                         }
                       }
@@ -786,7 +782,7 @@
             }
           },
           "401": {
-            "description": "Session not found | Session token ispired",
+            "description": "Session not found | Session token expired",
             "content": {
               "application/json": {
                 "schema": {
@@ -802,7 +798,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Session not found | Session token ispired"
+                      "example": "Session not found | Session token expired"
                     }
                   }
                 }
@@ -960,6 +956,141 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/get-oauth-url": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get Google OAuth URL",
+        "operationId": "getOauthUrl",
+        "description": "Returns the Google OAuth authorization URL that the frontend should redirect the user to. The user will authenticate with Google and then be redirected back to your app's callback endpoint (e.g., `/auth/confirm-oauth`) with an authorization code.\n",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successfully get OAuth url.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully get OAuth url."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "oauth_url"
+                      ],
+                      "properties": {
+                        "oauth_url": {
+                          "type": "string",
+                          "description": "The full URL to redirect the user for Google OAuth authentication.",
+                          "example": "https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email %20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile &response_type=code &client_id=791482148899-h3h81633fvde8pr3enhpvl69t2ekkt58.apps.googleusercontent.com &redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgoogle-redirect\n"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Confirm OAuth authorization",
+        "operationId": "confirmOauth",
+        "description": "Completes the OAuth authorization process by exchanging the authorization `code` (received from Google) for an access token. The returned **access token** can be used to authenticate subsequent API requests. The token is valid for **30 minutes**.\n",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The authorization code received from Google after successful user consent.\n",
+                    "example": "4/0AVGzR1CWhf2wt9w0ry_66Ovoc1i41GwMF6INt6_XoqHXeGFXNOCP21AT4SvnHJ2..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated the user via Google OAuth.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully authenticated the user via Google OAuth."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "Empty object (no response body content)The access token for authenticating subsequent requests. **Expires in 30 minutes.**\n",
+                          "example": "5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
             "$ref": "#/components/responses/404"

@@ -2,7 +2,11 @@ tags:
   - Auth
 summary: Refresh user session
 operationId: refreshUserSession
-description: Refresh user session creating new pear of access and refresh tokens  .
+description: >
+  Refreshes the user session by generating a new pair of **access** and **refresh tokens**.
+  Requires a valid `refreshToken` from an active session.
+  - **Access token** is valid for 30 minutes.
+  - **Refresh token** is valid for 30 days.
 security:
   - bearerAuth: []
 requestBody:
@@ -21,7 +25,9 @@ requestBody:
             example: 68f4e2cd5bd18b92feb71a6c
           refreshToken:
             type: string
-            description: Refresh token of session
+            description: >
+              The refresh token issued during login.
+              Used to request a new access token when the old one expires.
             example: +v6IL9HPf7EwJzFHqxFB8WoKLfmQShzTG97XqNIk
 responses:
   '201':
@@ -48,10 +54,12 @@ responses:
               properties:
                 accessToken:
                   type: string
-                  description: Session access token
+                  description: >
+                    The new access token.
+                    Valid for **30 minutes** from the time of issuance.
                   example: 5l+UVa45N00kChWDGLPeY1qy5H/vb4Het66h9vr9
   '401':
-    description: Session not found | Session token ispired
+    description: Session not found | Session token expired
     content:
       application/json:
         schema:
@@ -65,6 +73,6 @@ responses:
               example: 401
             message:
               type: string
-              example: Session not found | Session token ispired
+              example: Session not found | Session token expired
   '500':
     $ref: ../../components/responses/500.yaml
