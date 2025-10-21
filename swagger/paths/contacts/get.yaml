@@ -2,14 +2,15 @@ tags:
   - Contacts
 summary: Get all contacts
 operationId: getAllContacts
-description: 'Get your all contacts'
+description: >
+  Get all contacts belonging to the authenticated user.
 security:
   - bearerAuth: []
 parameters:
   - in: query
     name: page
     required: false
-    description: 'Current page'
+    description: Current page number.
     schema:
       type: integer
       default: 1
@@ -18,7 +19,7 @@ parameters:
   - in: query
     name: perPage
     required: false
-    description: 'Number of contacts in a single page'
+    description: Number of contacts per page.
     schema:
       type: integer
       default: 10
@@ -27,11 +28,11 @@ parameters:
   - in: query
     name: sortBy
     required: false
-    description: 'Sort contacts by name'
+    description: Field name to sort contacts by.
     schema:
       type: string
       default: _id
-      example: 'name'
+      example: name
 
   - in: query
     name: sortOrder
@@ -44,13 +45,21 @@ parameters:
       example: 'desc'
 
   - in: query
-    name: filter
+    name: contactType
     required: false
-    description: 'filter the contacts by chosen params'
+    description: Filter contacts by type.
     schema:
       type: string
       enum: ['work', 'home', 'personal']
       example: 'work'
+
+  - in: query
+    name: isFavourite
+    required: false
+    description: Filter contacts by favourite status.
+    schema:
+      type: boolean
+      example: true
 
 responses:
   '200':

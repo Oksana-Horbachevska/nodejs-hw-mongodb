@@ -2,7 +2,10 @@ tags:
   - Contacts
 summary: Create contact
 operationId: createContact
-description: Create a new contact
+description: >
+  Creates a new contact and uploads an optional contact photo.
+  The request must be sent as **multipart/form-data**.
+  Requires a valid **Bearer access token** for authentication.
 security:
   - bearerAuth: []
 
