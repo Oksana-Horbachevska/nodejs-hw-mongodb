@@ -26,7 +26,8 @@ requestBody:
             example: Ivan Pavelko
           phoneNumber:
             type: string
-            description: Contact phone number
+            description: >
+              Contact phone number. Must be in international format starting with '+'.
             example: +380200000001
           contactType:
             type: string
@@ -39,6 +40,7 @@ requestBody:
             example: ivan@gmail.com
           photo:
             type: string
+            format: binary
             description: Contact photo
             example: http://localhost:8080/photos/1760298573710-175228118_IMG_0473.jpg
 responses:

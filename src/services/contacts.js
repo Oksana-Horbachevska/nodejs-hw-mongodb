@@ -16,11 +16,9 @@ export const getAllContacts = async ({
   if (typeof filter.contactType !== 'undefined') {
     contactsQuery.where('contactType').equals(filter.contactType);
   }
-
   if (typeof filter.isFavourite !== 'undefined') {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
-
   const contactsCount = await ContactsCollection.find()
     .merge(contactsQuery)
     .countDocuments();
@@ -37,12 +35,10 @@ export const getAllContacts = async ({
     ...paginationData,
   };
 };
-
 export const getContactsById = async (contactId, userId) => {
   const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   return contact;
 };
-
 export const createContact = async (payload) => {
   const contact = await ContactsCollection.create(payload);
   return contact;
@@ -63,7 +59,6 @@ export const updateContact = async (
       ...options,
     },
   );
-
   if (!rawResult || !rawResult.value) return null;
   return {
     contact: rawResult.value,

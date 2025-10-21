@@ -14,7 +14,8 @@ tags:
     description: Auth endpoints
 servers:
   - url: http://127.0.0.1:8080
-    #посилання на задеплоєний сайт
+  - url: https://nodejs-hw-mongodb-8bgy.onrender.com
+
 paths:
   /contacts/{id}:
     get:
