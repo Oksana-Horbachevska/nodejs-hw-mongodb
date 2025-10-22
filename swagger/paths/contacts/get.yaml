@@ -56,7 +56,7 @@ parameters:
   - in: query
     name: isFavourite
     required: false
-    description: Filter contacts by favourite status.
+    description: Filter contacts by favorite status.
     schema:
       type: boolean
       example: true
