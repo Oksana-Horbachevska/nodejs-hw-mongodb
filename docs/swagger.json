@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://127.0.0.1:8080"
+    },
+    {
+      "url": "https://nodejs-hw-mongodb-8bgy.onrender.com"
     }
   ],
   "tags": [
@@ -98,7 +101,7 @@
         ],
         "summary": "Delete contact",
         "operationId": "deleteContact",
-        "description": "Delete contact by id",
+        "description": "Deletes a contact from the user's contact list by its unique identifier (`_id`). Requires a valid **Bearer access token** for authentication.\n",
         "security": [
           {
             "bearerAuth": []
@@ -117,32 +120,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully found contact with id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found contact with id"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/contacts"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "No content"
           },
           "400": {
             "$ref": "#/components/responses/400"
@@ -196,7 +174,7 @@
                   },
                   "phoneNumber": {
                     "type": "string",
-                    "description": "Contact phone number",
+                    "description": "Contact phone number. Must be in international format starting with '+'.\n",
                     "example": 380200000001
                   },
                   "contactType": {
@@ -216,6 +194,7 @@
                   },
                   "photo": {
                     "type": "string",
+                    "format": "binary",
                     "description": "Contact photo",
                     "example": "http://localhost:8080/photos/1760298573710-175228118_IMG_0473.jpg"
                   }
@@ -272,7 +251,7 @@
         ],
         "summary": "Get all contacts",
         "operationId": "getAllContacts",
-        "description": "Get your all contacts",
+        "description": "Get all contacts belonging to the authenticated user.\n",
         "security": [
           {
             "bearerAuth": []
@@ -283,7 +262,7 @@
             "in": "query",
             "name": "page",
             "required": false,
-            "description": "Current page",
+            "description": "Current page number.",
             "schema": {
               "type": "integer",
               "default": 1,
@@ -294,7 +273,7 @@
             "in": "query",
             "name": "perPage",
             "required": false,
-            "description": "Number of contacts in a single page",
+            "description": "Number of contacts per page.",
             "schema": {
               "type": "integer",
               "default": 10,
@@ -305,7 +284,7 @@
             "in": "query",
             "name": "sortBy",
             "required": false,
-            "description": "Sort contacts by name",
+            "description": "Field name to sort contacts by.",
             "schema": {
               "type": "string",
               "default": "_id",
@@ -329,9 +308,9 @@
           },
           {
             "in": "query",
-            "name": "filter",
+            "name": "contactType",
             "required": false,
-            "description": "filter the contacts by chosen params",
+            "description": "Filter contacts by type.",
             "schema": {
               "type": "string",
               "enum": [
@@ -340,6 +319,16 @@
                 "personal"
               ],
               "example": "work"
+            }
+          },
+          {
+            "in": "query",
+            "name": "isFavourite",
+            "required": false,
+            "description": "Filter contacts by favorite status.",
+            "schema": {
+              "type": "boolean",
+              "example": true
             }
           }
         ],
@@ -427,7 +416,7 @@
         ],
         "summary": "Create contact",
         "operationId": "createContact",
-        "description": "Create a new contact",
+        "description": "Creates a new contact and uploads an optional contact photo. The request must be sent as **multipart/form-data**. Requires a valid **Bearer access token** for authentication.\n",
         "security": [
           {
             "bearerAuth": []
@@ -1263,7 +1252,7 @@
           },
           "phoneNumber": {
             "type": "string",
-            "description": "Contact phone number",
+            "description": "Contact phone number. Must be in international format starting with '+'.\n",
             "example": 380200000001
           },
           "contactType": {
@@ -1283,6 +1272,7 @@
           },
           "photo": {
             "type": "string",
+            "format": "binary",
             "description": "Contact photo",
             "example": "http://localhost:8080/photos/1760298573710-175228118_IMG_0473.jpg"
           }
