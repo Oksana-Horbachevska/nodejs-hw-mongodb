@@ -54,9 +54,11 @@ export const createContactController = async (req, res) => {
   //   path.resolve('src/uploads/photos', req.file.filename),
   // );
   let photo;
-  const response = await uploadToCloudinary(req.file.path);
-  await fs.unlink(req.file.path);
-  photo = response.secure_url;
+  if (req.file) {
+    const response = await uploadToCloudinary(req.file.path);
+    await fs.unlink(req.file.path);
+    photo = response.secure_url;
+  }
 
   const contact = await createContact({
     ...req.body,
