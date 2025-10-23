@@ -24,6 +24,10 @@ properties:
     type: string
     description: Contact email
     example: ivan@gmail.com
+  isFavourite:
+    type: boolean
+    description: Favorite status of the contact
+    example: true
   photo:
     type: string
     format: binary

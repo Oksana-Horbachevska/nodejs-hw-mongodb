@@ -63,7 +63,7 @@ parameters:
 
 responses:
   '200':
-    description: 'Successfully found contacts!'
+    description: 'Successfully found contacts.'
     content:
       application/json:
         schema:
