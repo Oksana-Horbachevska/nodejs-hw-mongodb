@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:8080"
-    },
-    {
       "url": "https://nodejs-hw-mongodb-8bgy.onrender.com"
     }
   ],
@@ -192,6 +189,11 @@
                     "description": "Contact email",
                     "example": "ivan@gmail.com"
                   },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Favorite status of the contact",
+                    "example": true
+                  },
                   "photo": {
                     "type": "string",
                     "format": "binary",
@@ -334,7 +336,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully found contacts!",
+            "description": "Successfully found contacts.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1248,7 +1250,7 @@
             "description": "Contact name",
             "minLength": 3,
             "maxLength": 50,
-            "example": "Ivan Pavelko"
+            "example": "John Smith"
           },
           "phoneNumber": {
             "type": "string",
@@ -1268,7 +1270,12 @@
           "email": {
             "type": "string",
             "description": "Contact email",
-            "example": "ivan@gmail.com"
+            "example": "smith@gmail.com"
+          },
+          "isFavourite": {
+            "type": "boolean",
+            "description": "Favorite status of the contact",
+            "example": true
           },
           "photo": {
             "type": "string",

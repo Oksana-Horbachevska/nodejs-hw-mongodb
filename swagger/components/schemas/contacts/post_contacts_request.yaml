@@ -9,7 +9,7 @@ properties:
     description: Contact name
     minLength: 3
     maxLength: 50
-    example: Ivan Pavelko
+    example: John Smith
   phoneNumber:
     type: string
     description: >
@@ -23,7 +23,7 @@ properties:
   email:
     type: string
     description: Contact email
-    example: ivan@gmail.com
+    example: smith@gmail.com
   isFavourite:
     type: boolean
     description: Favorite status of the contact
